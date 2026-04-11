@@ -7,12 +7,22 @@
 ## Ejercicio 1 — Análisis Estadístico Descriptivo
 ---
 Añade aqui tu descripción y analisis:
+En este ejercicio se ha realizado un análisis estadístico descriptivo del dataset de precios de viviendas.
 
+En primer lugar, se ha explorado la estructura del dataset, identificando el número de variables, tipos de datos y la presencia de valores nulos, observándose que algunas variables presentan un porcentaje elevado de datos faltantes.
+
+Posteriormente, se han calculado estadísticos descriptivos de las variables numéricas, prestando especial atención a la variable objetivo `SalePrice`, que muestra una distribución asimétrica positiva y presencia de valores extremos.
+
+También se han generado visualizaciones como histogramas y matrices de correlación, lo que ha permitido identificar relaciones relevantes entre variables, destacando aquellas con mayor correlación con el precio.
+
+Además, se ha realizado un análisis de variables categóricas y la detección de outliers mediante el método del rango intercuartílico (IQR).
+
+En conjunto, este análisis ha permitido comprender mejor la estructura y características del dataset, sentando las bases para el posterior modelado en los siguientes ejercicios.
 ---
 
 **Pregunta 1.1** — ¿De qué fuente proviene el dataset y cuál es la variable objetivo (target)? ¿Por qué tiene sentido hacer regresión sobre ella?
 
->el dataset proviene de la plataforma kaggle,concretamente del conjunto "House Prices – Advanced Regression Techniques", basado en datos reales de viviendas de Ames (Iowa, EE.UU.)https://www.kaggle.com/datasets/rishitaverma02/house-prices-advanced-regression-techniques?select=train+%281%29.csv
+>el dataset proviene de la plataforma kaggle,concretamente del conjunto "House Prices – Advanced Regression Techniques", basado en datos reales de viviendas de Ames (Iowa, EE.UU.)
 
 La variable objetivo(target) es `SalePrice`, que representa el precio de venta de las viviendas.
 
@@ -58,13 +68,31 @@ En esta fase descriptiva no se han tratado, ya que el objetivo es analizar la es
 
 ---
 Añade aqui tu descripción y analisis:
+En este ejercicio se ha construido un modelo de regresión lineal utilizando Scikit-Learn con el objetivo de predecir el precio de las viviendas (`SalePrice`).
+
+Se ha realizado un preprocesamiento de los datos que incluye la eliminación de variables con muchos valores nulos, la codificación de variables categóricas mediante one-hot encoding y la imputación de valores faltantes.
+
+Posteriormente, se ha dividido el dataset en conjuntos de entrenamiento y test, aplicando escalado a las variables numéricas antes de entrenar el modelo.
+
+Finalmente, se ha evaluado el modelo utilizando métricas como MAE, RMSE y R², y se ha analizado su rendimiento, observando que el modelo presenta un comportamiento aceptable aunque con margen de mejora debido a la presencia de outliers y posibles relaciones no lineales.
 
 ---
 
 **Pregunta 2.1** — Indica los valores de MAE, RMSE y R² de la regresión lineal sobre el test set. ¿El modelo funciona bien? ¿Por qué?
 
-> _Escribe aquí tu respuesta_
+> El modelo de regresión lineal ha obtenido las siguientes métricas en el conjunto de test:
 
+- MAE (Mean Absolute Error): 20559.76  
+- RMSE (Root Mean Squared Error): 52237.53  
+- R² (coeficiente de determinación): 0.6442  
+
+El valor de R² indica que el modelo es capaz de explicar aproximadamente el 64.4% de la variabilidad del precio de las viviendas, lo cual puede considerarse un rendimiento moderado.
+
+El MAE muestra que el error medio de las predicciones es de unos 20,559, lo cual es razonable en el contexto de precios de vivienda. Sin embargo, el RMSE es considerablemente mayor (52,237), lo que indica la presencia de errores grandes en algunas predicciones.
+
+En general, el modelo funciona de forma aceptable, pero no óptima. La diferencia entre MAE y RMSE sugiere que existen outliers o valores extremos que afectan negativamente al rendimiento del modelo.
+
+Esto indica que, aunque el modelo captura una parte importante de la variabilidad del precio, aún existen factores no lineales o variables no consideradas que limitan su capacidad predictiva.
 
 ---
 
