@@ -21,15 +21,7 @@ os.makedirs("output", exist_ok=True)
 
 def cargar_datos(ruta):
     """
-    Carga el dataset desde un fichero CSV.
-
-    Parámetros
-    ----------
-    ruta : str — Ruta al archivo CSV
-
-    Retorna
-    -------
-    df : pd.DataFrame — Dataset cargado
+    Carga el dataset desde un fichero CSV
     """
     return pd.read_csv(ruta)
 
@@ -40,11 +32,12 @@ def cargar_datos(ruta):
 
 def resumen_estructural(df):
     """
-    Muestra información básica del dataset.
+    Muestra información general del dataset
     """
     print("\n--- RESUMEN ESTRUCTURAL ---")
     print(f"Filas: {df.shape[0]}")
     print(f"Columnas: {df.shape[1]}")
+
     print("\nTipos de datos:")
     print(df.dtypes)
 
@@ -58,33 +51,28 @@ def resumen_estructural(df):
 
 def estadisticos_descriptivos(df, target):
     """
-    Calcula estadísticos descriptivos y guarda CSV.
+    Calcula estadísticas principales del dataset
     """
     df.describe().to_csv("output/ej1_descriptivo.csv")
 
-    # IQR
     Q1 = df[target].quantile(0.25)
     Q3 = df[target].quantile(0.75)
     IQR = Q3 - Q1
 
     print("\n--- ESTADÍSTICOS TARGET ---")
-    print(f"IQR ({target}): {IQR}")
-
+    print(f"IQR: {IQR}")
     print(f"Skewness: {df[target].skew()}")
     print(f"Curtosis: {df[target].kurtosis()}")
 
-    return IQR
-
-
 # =============================================================================
-# VISUALIZACIONES NUMÉRICAS
+# VISUALIZACIONES
 # =============================================================================
 
 def graficar_histogramas(df):
     """
-    Genera histogramas de variables numéricas.
+    Histogramas de variables numéricas
     """
-    df.select_dtypes(include=np.number).hist(figsize=(15, 12))
+    df.select_dtypes(include=np.number).hist(figsize=(15, 10))
     plt.tight_layout()
     plt.savefig("output/ej1_histogramas.png")
     plt.close()
@@ -92,16 +80,16 @@ def graficar_histogramas(df):
 
 def graficar_heatmap(df):
     """
-    Genera heatmap de correlaciones.
+    Matriz de correlación
     """
     corr = df.corr(numeric_only=True)
 
     plt.figure(figsize=(12, 8))
     sns.heatmap(corr, cmap="coolwarm", center=0)
     plt.title("Matriz de correlación")
-    plt.savefig("output/ej1_heatmap_correlacion.png")
-    plt.close()
 
+    plt.savefig("output/ej1_heatmap.png")
+    plt.close()
 
 # =============================================================================
 # VARIABLES CATEGÓRICAS
@@ -109,24 +97,13 @@ def graficar_heatmap(df):
 
 def analizar_categoricas(df):
     """
-    Analiza variables categóricas y genera gráficos.
+    Análisis de variables categóricas
     """
-    cat_cols = df.select_dtypes(include=['object', 'string']).columns
+    cat_cols = df.select_dtypes(include=["object", "string"]).columns
 
     for col in cat_cols:
         print(f"\n--- {col} ---")
         print(df[col].value_counts(normalize=True))
-
-    plt.figure(figsize=(15, 10))
-    for i, col in enumerate(cat_cols[:4]):  # limitamos a 4 para no saturar
-        plt.subplot(2, 2, i+1)
-        df[col].value_counts().plot(kind='bar')
-        plt.title(col)
-
-    plt.tight_layout()
-    plt.savefig("output/ej1_categoricas.png")
-    plt.close()
-
 
 # =============================================================================
 # BOXPLOTS Y OUTLIERS
@@ -134,13 +111,14 @@ def analizar_categoricas(df):
 
 def boxplots_por_categoria(df, target):
     """
-    Genera boxplots del target por variables categóricas.
+    Boxplots del target según variables categóricas
     """
-    cat_cols = df.select_dtypes(include=['object', 'string']).columns[:3]
+    cat_cols = df.select_dtypes(include=["object", "string"]).columns[:3]
 
     plt.figure(figsize=(15, 5))
+
     for i, col in enumerate(cat_cols):
-        plt.subplot(1, 3, i+1)
+        plt.subplot(1, 3, i + 1)
         sns.boxplot(x=col, y=target, data=df)
         plt.xticks(rotation=45)
 
@@ -151,7 +129,7 @@ def boxplots_por_categoria(df, target):
 
 def detectar_outliers(df, target):
     """
-    Detecta outliers usando IQR y guarda resultados.
+    Detección de outliers con IQR
     """
     Q1 = df[target].quantile(0.25)
     Q3 = df[target].quantile(0.75)
@@ -167,14 +145,13 @@ def detectar_outliers(df, target):
 
     print(f"\nOutliers detectados: {len(outliers)}")
 
-
 # =============================================================================
 # CORRELACIONES
 # =============================================================================
 
 def analizar_correlaciones(df, target):
     """
-    Identifica variables más correlacionadas con el target.
+    Correlaciones con la variable objetivo
     """
     corr = df.corr(numeric_only=True)[target].abs().sort_values(ascending=False)
 
@@ -183,11 +160,11 @@ def analizar_correlaciones(df, target):
 
     print("\n--- MULTICOLINEALIDAD (|r| > 0.9) ---")
     matriz = df.corr(numeric_only=True).abs()
+
     for i in range(len(matriz.columns)):
         for j in range(i):
             if matriz.iloc[i, j] > 0.9:
                 print(matriz.columns[i], "-", matriz.columns[j], matriz.iloc[i, j])
-
 
 # =============================================================================
 # MAIN
@@ -216,4 +193,4 @@ if __name__ == "__main__":
 
     analizar_correlaciones(df, TARGET)
 
-    print("\n[OK] Ejercicio 1 completado")
+    print("\nEjercicio 1 completado correctamente")
