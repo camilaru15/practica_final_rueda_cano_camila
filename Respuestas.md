@@ -6,93 +6,36 @@
 
 ## Ejercicio 1 — Análisis Estadístico Descriptivo
 ---
-Añade aqui tu descripción y analisis:
-En este ejercicio se ha realizado un análisis estadístico descriptivo del dataset de precios de viviendas.
-
-En primer lugar, se ha explorado la estructura del dataset, identificando el número de variables, tipos de datos y la presencia de valores nulos, observándose que algunas variables presentan un porcentaje elevado de datos faltantes.
-
-Posteriormente, se han calculado estadísticos descriptivos de las variables numéricas, prestando especial atención a la variable objetivo `SalePrice`, que muestra una distribución asimétrica positiva y presencia de valores extremos.
-
-También se han generado visualizaciones como histogramas y matrices de correlación, lo que ha permitido identificar relaciones relevantes entre variables, destacando aquellas con mayor correlación con el precio.
-
-Además, se ha realizado un análisis de variables categóricas y la detección de outliers mediante el método del rango intercuartílico (IQR).
-
-En conjunto, este análisis ha permitido comprender mejor la estructura y características del dataset, sentando las bases para el posterior modelado en los siguientes ejercicios.
+En este ejercicio se ha realizado un análisis estadístico descriptivo del dataset de precios de viviendas. Se ha comenzado explorando la estructura del dataset, identificando el número de variables, sus tipos y la presencia de valores nulos. Se ha observado que algunas variables presentan un porcentaje elevado de datos faltantes, especialmente aquellas relacionadas con características poco frecuentes. Posteriormente, se han calculado estadísticos descriptivos de las variables numéricas, prestando especial atención a la variable objetivo `SalePrice`. Esta presenta una distribución asimétrica positiva (skewness ≈ 1.88) y alta curtosis (≈ 6.53), lo que indica la presencia de valores extremos y una distribución no normal. Se han generado visualizaciones como histogramas y matrices de correlación, que han permitido identificar relaciones relevantes entre variables. Destacan variables como `OverallQual`, `GrLivArea` y `GarageCars` por su alta correlación con el precio. También se ha realizado un análisis de variables categóricas, observando la distribución de sus valores, y se han detectado outliers mediante el método del rango intercuartílico (IQR). En conjunto, este análisis permite comprender mejor la estructura del dataset y proporciona una base sólida para el modelado posterior.
 ---
 
 **Pregunta 1.1** — ¿De qué fuente proviene el dataset y cuál es la variable objetivo (target)? ¿Por qué tiene sentido hacer regresión sobre ella?
 
->el dataset proviene de la plataforma kaggle,concretamente del conjunto "House Prices – Advanced Regression Techniques", basado en datos reales de viviendas de Ames (Iowa, EE.UU.)
-
-La variable objetivo(target) es `SalePrice`, que representa el precio de venta de las viviendas.
-
-En este dataset tiene sentido aplicar un modelo de regresión porque:
-- Se trata de una variable numérica continua.
-- El objetivo es predecir su valor a partir de otras características del inmueble(superficie, calidad, ubicación, etc.).
-- Existe una relación observable entre múltiples variables explicativas y el precio, lo que hace adecuado el uso de modelos de regresión.
+> El dataset proviene de Kaggle y contiene información sobre características de viviendas y sus precios de venta. La variable objetivo es `SalePrice`, que representa el precio de venta de cada vivienda. Tiene sentido aplicar regresión ya que se trata de una variable continua y se busca predecir su valor en función de otras variables explicativas.
 
 **Pregunta 1.2** — ¿Qué distribución tienen las principales variables numéricas y has encontrado outliers? Indica en qué variables y qué has decidido hacer con ellos.
 
->La variable objetivo presenta una asimetría positiva (skewness = 1.88), lo que indica que existen valores altos que desplazan la distribución hacia la derecha.
-
-Además, la curtosis es elevada (6.53), lo que sugiere la presencia de colas pesadas y numerosos valores atípicos.
-
-Esto indica que la distribución no es normal y que existen outliers relevantes que pueden afectar al modelado.Juntas te dicen "Los precios no están bien distribuidos y hay valores extremos importantes"
+> La variable objetivo presenta una distribución asimétrica positiva, lo que indica que existen valores altos que generan una cola hacia la derecha. Además, la curtosis elevada sugiere la presencia de colas pesadas, lo que implica la existencia de valores atípicos. Estos outliers han sido identificados mediante el método IQR, detectándose un número relevante de ellos. En este ejercicio no se han eliminado, pero se reconoce que pueden afectar al rendimiento de modelos posteriores.
 
 **Pregunta 1.3** — ¿Qué tres variables numéricas tienen mayor correlación (en valor absoluto) con la variable objetivo? Indica los coeficientes.
 
->Las tres variables numéricas con mayor correlación (en valor absoluto) con la variable objetivo `SalePrice` son:
-
-- OverallQual: 0.790982 (calidad general de la vivienda)
-- GrLivArea: 0.708624 (superficie habitable)
-- GarageCars: 0.640409 (capacidad del garaje)
-
-Esto indica que el precio de la vivienda está fuertemente influenciado por la calidad de construcción y acabados tiene un impacto directo en el precio, el área habitable y la capacidad del garaje tambien influyen con añadir valor a la propiedad buscando ser coherentes con el mercado inmobiliario
+> Las tres variables con mayor correlación absoluta con `SalePrice` son:                    - `OverallQual`: ≈ 0.79                                                                     - `GrLivArea`: ≈ 0.70                                                                        - `GarageCars`: ≈ 0.64                                                                   Estas variables muestran una relación positiva con el precio, indicando que a mayor calidad, superficie habitable o capacidad de garaje, mayor es el valor de la vivienda.
 
 **Pregunta 1.4** — ¿Hay valores nulos en el dataset? ¿Qué porcentaje representan y cómo los has tratado?
 
-> Sí, el dataset presenta valores nulos en varias variables. Algunas de las más relevantes son:
-
-- PoolQC: ~99.5%
-- MiscFeature: ~96.3%
-- Alley: ~93.7%
-- Fence: ~80.7%
-
-Estos valores nulos se han identificado mediante el cálculo del porcentaje de valores faltantes por variable.
-
-En esta fase descriptiva no se han tratado, ya que el objetivo es analizar la estructura del dataset, pero se tendrán en cuenta en el preprocesamiento del modelo en el siguiente ejercicio.
+> Sí, existen valores nulos en varias variables, algunas con porcentajes muy elevados. En este ejercicio no se han imputado ni eliminado explícitamente, pero se han identificado como un aspecto importante a tratar en fases posteriores de modelado.
 
 ---
 
 ## Ejercicio 2 — Inferencia con Scikit-Learn
 
 ---
-Añade aqui tu descripción y analisis:
-En este ejercicio se ha construido un modelo de regresión lineal utilizando Scikit-Learn con el objetivo de predecir el precio de las viviendas (`SalePrice`).
-
-Se ha realizado un preprocesamiento de los datos que incluye la eliminación de variables con muchos valores nulos, la codificación de variables categóricas mediante one-hot encoding y la imputación de valores faltantes.
-
-Posteriormente, se ha dividido el dataset en conjuntos de entrenamiento y test, aplicando escalado a las variables numéricas antes de entrenar el modelo.
-
-Finalmente, se ha evaluado el modelo utilizando métricas como MAE, RMSE y R², y se ha analizado su rendimiento, observando que el modelo presenta un comportamiento aceptable aunque con margen de mejora debido a la presencia de outliers y posibles relaciones no lineales.
-
+En este ejercicio se han desarrollado dos modelos: uno de regresión lineal para predecir el precio de las viviendas y otro de regresión logística para clasificar las viviendas en diferentes rangos de precio. Se ha realizado un preprocesamiento de los datos que incluye la eliminación de variables con alto porcentaje de valores nulos, la codificación de variables categóricas mediante one-hot encoding y la imputación de valores faltantes con la media. Posteriormente, se ha dividido el dataset en conjuntos de entrenamiento y test, aplicando escalado a las variables antes de entrenar los modelos. El modelo de regresión lineal permite estimar el precio de las viviendas, mientras que el modelo de regresión logística permite clasificarlas en categorías (bajo, medio-bajo, medio-alto, alto), proporcionando una perspectiva adicional del problema.
 ---
 
 **Pregunta 2.1** — Indica los valores de MAE, RMSE y R² de la regresión lineal sobre el test set. ¿El modelo funciona bien? ¿Por qué?
 
-> El modelo de regresión lineal ha obtenido las siguientes métricas en el conjunto de test:
-
-- MAE (Mean Absolute Error): 20559.76  
-- RMSE (Root Mean Squared Error): 52237.53  
-- R² (coeficiente de determinación): 0.6442  
-
-El valor de R² indica que el modelo es capaz de explicar aproximadamente el 64.4% de la variabilidad del precio de las viviendas, lo cual puede considerarse un rendimiento moderado.
-
-El MAE muestra que el error medio de las predicciones es de unos 20,559, lo cual es razonable en el contexto de precios de vivienda. Sin embargo, el RMSE es considerablemente mayor (52,237), lo que indica la presencia de errores grandes en algunas predicciones.
-
-En general, el modelo funciona de forma aceptable, pero no óptima. La diferencia entre MAE y RMSE sugiere que existen outliers o valores extremos que afectan negativamente al rendimiento del modelo.
-
-Esto indica que, aunque el modelo captura una parte importante de la variabilidad del precio, aún existen factores no lineales o variables no consideradas que limitan su capacidad predictiva.
+> El modelo de regresión lineal ha obtenido las siguientes métricas:                        - MAE: 20559.76                                                                             - RMSE: 52237.53                                                                            - R²: 0.6442                                                                               El modelo explica aproximadamente el 64.4% de la variabilidad del precio, lo cual representa un rendimiento moderado. El MAE indica un error medio razonable, mientras que el RMSE es significativamente mayor, lo que sugiere la presencia de errores grandes en algunas predicciones, probablemente debido a outliers. En general, el modelo funciona de manera aceptable, aunque con margen de mejora.
 
 ---
 
