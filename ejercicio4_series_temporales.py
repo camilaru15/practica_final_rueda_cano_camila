@@ -258,10 +258,13 @@ def analizar_residuo(residuo):
 
 
     # TODO: Guardar estadísticos en output/ej4_analisis.txt
+    from scipy.stats import jarque_bera
+
+    stat, pvalue = jarque_bera(residuo_limpio)
+
     with open("output/ej4_analisis.txt", "w", encoding="utf-8") as f:
       f.write("Analisis del residuo\n")
       f.write("=" * 40 + "\n\n")
-
       f.write(f"Media: {media:.4f}\n")
       f.write(f"Std: {std:.4f}\n")
       f.write(f"Asimetria: {asimetria:.4f}\n")

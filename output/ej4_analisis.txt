@@ -7,3 +7,8 @@ Asimetria: -0.0509
 Curtosis: -0.0610
 
 Test Jarque-Bera:
+Estadistico: 1.1013
+p-value: 0.576561
+
+Test ADF (estacionariedad):
+p-value: 0.000000

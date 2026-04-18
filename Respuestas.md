@@ -6,7 +6,7 @@
 
 ## Ejercicio 1 — Análisis Estadístico Descriptivo
 ---
-En este ejercicio se ha realizado un análisis estadístico descriptivo del dataset de precios de viviendas. Se ha comenzado explorando la estructura del dataset, identificando el número de variables, sus tipos y la presencia de valores nulos. Se ha observado que algunas variables presentan un porcentaje elevado de datos faltantes, especialmente aquellas relacionadas con características poco frecuentes. Posteriormente, se han calculado estadísticos descriptivos de las variables numéricas, prestando especial atención a la variable objetivo `SalePrice`. Esta presenta una distribución asimétrica positiva (skewness ≈ 1.88) y alta curtosis (≈ 6.53), lo que indica la presencia de valores extremos y una distribución no normal. Se han generado visualizaciones como histogramas y matrices de correlación, que han permitido identificar relaciones relevantes entre variables. Destacan variables como `OverallQual`, `GrLivArea` y `GarageCars` por su alta correlación con el precio. También se ha realizado un análisis de variables categóricas, observando la distribución de sus valores, y se han detectado outliers mediante el método del rango intercuartílico (IQR). En conjunto, este análisis permite comprender mejor la estructura del dataset y proporciona una base sólida para el modelado posterior.
+En este ejercicio se ha realizado un análisis estadístico descriptivo del dataset de precios de viviendas. Se ha comenzado explorando la estructura del dataset, identificando el número de variables, sus tipos y la presencia de valores nulos. Se ha observado que algunas variables presentan un porcentaje elevado de datos faltantes, especialmente aquellas relacionadas con características poco frecuentes. Posteriormente, se han calculado estadísticos descriptivos de las variables numéricas, prestando especial atención a la variable objetivo `SalePrice`. Esta presenta una distribución asimétrica positiva (skewness ≈ 1.88) y alta curtosis (≈ 6.53), lo que indica la presencia de valores extremos y una distribución no normal. Se han generado visualizaciones como histogramas y matrices de correlación, que han permitido identificar relaciones relevantes entre variables. Destacan variables como `OverallQual` (≈ 0.79), `GrLivArea` (≈ 0.70) y `GarageCars` (≈ 0.64) por su alta correlación con el precio. También se ha realizado un análisis de variables categóricas, observando la distribución de sus valores, y se han detectado outliers mediante el método del rango intercuartílico (IQR). En conjunto, este análisis permite comprender mejor la estructura del dataset y proporciona una base sólida para el modelado predictivo posterior
 ---
 
 **Pregunta 1.1** — ¿De qué fuente proviene el dataset y cuál es la variable objetivo (target)? ¿Por qué tiene sentido hacer regresión sobre ella?
@@ -19,7 +19,11 @@ En este ejercicio se ha realizado un análisis estadístico descriptivo del data
 
 **Pregunta 1.3** — ¿Qué tres variables numéricas tienen mayor correlación (en valor absoluto) con la variable objetivo? Indica los coeficientes.
 
-> Las tres variables con mayor correlación absoluta con `SalePrice` son:                    - `OverallQual`: ≈ 0.79                                                                     - `GrLivArea`: ≈ 0.70                                                                        - `GarageCars`: ≈ 0.64                                                                   Estas variables muestran una relación positiva con el precio, indicando que a mayor calidad, superficie habitable o capacidad de garaje, mayor es el valor de la vivienda.
+> Las tres variables con mayor correlación absoluta con `SalePrice` son:
+- `OverallQual`: ≈ 0.79
+- `GrLivArea`: ≈ 0.70
+- `GarageCars`: ≈ 0.64
+Estas variables muestran una relación positiva con el precio, indicando que a mayor calidad, superficie habitable o capacidad de garaje, mayor es el valor de la vivienda.
 
 **Pregunta 1.4** — ¿Hay valores nulos en el dataset? ¿Qué porcentaje representan y cómo los has tratado?
 
@@ -35,7 +39,11 @@ En este ejercicio se han desarrollado dos modelos: uno de regresión lineal para
 
 **Pregunta 2.1** — Indica los valores de MAE, RMSE y R² de la regresión lineal sobre el test set. ¿El modelo funciona bien? ¿Por qué?
 
-> El modelo de regresión lineal ha obtenido las siguientes métricas:                        - MAE: 20559.76                                                                             - RMSE: 52237.53                                                                            - R²: 0.6442                                                                               El modelo explica aproximadamente el 64.4% de la variabilidad del precio, lo cual representa un rendimiento moderado. El MAE indica un error medio razonable, mientras que el RMSE es significativamente mayor, lo que sugiere la presencia de errores grandes en algunas predicciones, probablemente debido a outliers. En general, el modelo funciona de manera aceptable, aunque con margen de mejora.
+> El modelo de regresión lineal ha obtenido las siguientes métricas:
+- MAE: 20559.76
+- RMSE: 52237.53
+- R²: 0.6442
+El modelo explica aproximadamente el 64.4% de la variabilidad del precio, lo que indica un rendimiento moderado. Aunque capta una parte importante de la estructura de los datos, los errores elevados (especialmente reflejados en el RMSE) sugieren que existen observaciones difíciles de predecir, probablemente asociadas a outliers o relaciones no lineales no capturadas por el modelo.
 
 ---
 
@@ -56,14 +64,18 @@ En este ejercicio se ha implementado un modelo de regresión lineal múltiple de
 |-----------|-----------|----------------|
 | β₀        | 5.0       |      4.864995  |
 | β₁        | 2.0       |      2.063618  |
-| β₂        | -1.0      |      1.117038  |
+| β₂        | -1.0      |     -1.117038  |
 | β₃        | 0.5       |      0.438517  |
 
 > Los coeficientes ajustados son muy cercanos a los valores reales, lo que indica que el modelo ha sido capaz de recuperar correctamente la relación subyacente entre las variables. Las pequeñas diferencias se deben al ruido presente en los datos, lo cual es esperable en un escenario real.
 
 **Pregunta 3.3** — ¿Qué valores de MAE, RMSE y R² has obtenido? ¿Se aproximan a los de referencia?
 
-> - MAE: 1.1665 - RMSE: 1.4612 - R²: 0.6897 Los valores obtenidos son coherentes con los valores de referencia del enunciado. El MAE indica un error medio bajo, mientras que el RMSE es ligeramente superior, lo que sugiere la presencia de algunos errores más grandes. El R² cercano a 0.69 indica que el modelo explica una proporción significativa de la variabilidad de los datos, lo que se considera un buen resultado dado que el dataset incluye ruido.
+> Valores obtenidos: 
+- MAE: 1.1665 
+- RMSE: 1.4612 
+- R²: 0.6897 
+Los valores obtenidos son coherentes con los valores de referencia del enunciado. El MAE indica un error medio bajo, mientras que el RMSE es ligeramente superior, lo que sugiere la presencia de algunos errores más grandes. El R² cercano a 0.69 indica que el modelo explica una proporción significativa de la variabilidad de los datos, lo que se considera un buen resultado dado que el dataset incluye ruido.
 
 **Pregunta 3.4* — Compara los resultados con la reacción logística anterior para tu dataset y comprueba si el resultado es parecido. Explica qué ha sucedido. 
 
@@ -82,7 +94,7 @@ En este ejercicio se ha generado una serie temporal sintética compuesta por cua
 
 **Pregunta 4.2** — ¿Hay estacionalidad? Indica el periodo aproximado en días y la amplitud del patrón estacional.
 
->Sí, la serie presenta una estacionalidad muy marcada. El periodo es aproximadamente de 365 días, lo que indica un patrón anual. La amplitud del patrón estacional es considerable, con oscilaciones visibles en torno a la tendencia que pueden superar los ±15 unidades aproximadamente. Esto refleja un comportamiento repetitivo claro a lo largo de los años.
+>Sí, la serie presenta una estacionalidad muy marcada. El periodo es aproximadamente de 365 días, lo que indica un patrón anual. La amplitud del patrón estacional es considerable, con oscilaciones visibles en torno a la tendencia con una amplitud aproximada de ±15 unidades respecto a la tendencia. Esto refleja un comportamiento repetitivo claro a lo largo de los años.
 
 **Pregunta 4.3** — ¿Se aprecian ciclos de largo plazo en la serie? ¿Cómo los diferencias de la tendencia?
 
@@ -90,7 +102,22 @@ En este ejercicio se ha generado una serie temporal sintética compuesta por cua
 
 **Pregunta 4.4** — ¿El residuo se ajusta a un ruido ideal? Indica la media, la desviación típica y el resultado del test de normalidad (p-value) para justificar tu respuesta.
 
-> El residuo se aproxima bastante a un ruido ideal. Resultados obtenidos:                    - Media: 0.1271                                                                             - Desviación típica: 3.2220                                                                  - Asimetría: -0.0509                                                                        - Curtosis:- 00610                                                                          Interpretación:                                                                             - La media es cercana a cero, lo que indica ausencia de sesgo. - La asimetría próxima a cero sugiere una distribución simétrica. - La curtosis cercana a cero indica una forma similar a la normal. En cuanto al test de normalidad (Jarque-Bera), aunque el p-value no aparece completo en el archivo, los estadísticos anteriores indican que no hay evidencia fuerte para rechazar la normalidad. Por tanto, el residuo cumple razonablemente con las condiciones de un ruido blanco: media cercana a cero, distribución aproximadamente normal y ausencia de estructura sistemática.
+> El residuo se aproxima bastante a un ruido ideal.
+
+Resultados obtenidos:
+- Media: 0.1271  
+- Desviación típica: 3.2220  
+- Asimetría: -0.0509  
+- Curtosis: -0.0610  
+
+En cuanto al test de normalidad (Jarque-Bera):
+- p-value: 0.576561  
+
+Dado que el p-value es mayor que 0.05, no se rechaza la hipótesis nula de normalidad. Esto indica que el residuo puede considerarse aproximadamente normal.
+
+Además, el test ADF (Augmented Dickey-Fuller) da un p-value de 0.000000, lo que indica que el residuo es estacionario.
+
+En conjunto, el residuo cumple razonablemente con las condiciones de un ruido ideal: media cercana a cero, distribución aproximadamente normal y ausencia de tendencia o estructura sistemática.
 
 ---
 

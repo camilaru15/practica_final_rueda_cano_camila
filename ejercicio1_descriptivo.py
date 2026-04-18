@@ -88,7 +88,7 @@ def graficar_heatmap(df):
     sns.heatmap(corr, cmap="coolwarm", center=0)
     plt.title("Matriz de correlación")
 
-    plt.savefig("output/ej1_heatmap.png")
+    plt.savefig("output/ej1_heatmap_correlacion.png")
     plt.close()
 
 # =============================================================================

@@ -17,10 +17,6 @@ from sklearn.metrics import (
     mean_absolute_error,
     mean_squared_error,
     r2_score,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    f1_score,
     confusion_matrix
 )
 # Crear carpeta output
@@ -140,12 +136,11 @@ def modelo_logistico(X, y):
 
     y_pred = modelo.predict(X_test)
 
-    # Métricas
-    acc = accuracy_score(y_test, y_pred)
-    prec = precision_score(y_test, y_pred, average="weighted")
-    rec = recall_score(y_test, y_pred, average="weighted")
-    f1 = f1_score(y_test, y_pred, average="weighted")
-
+    acc = ...
+    prec = ...
+    rec = ...
+    f1 = ...
+    
     with open("output/ej2_metricas_logistica.txt", "w") as f:
         f.write(f"Accuracy: {acc}\n")
         f.write(f"Precision: {prec}\n")
